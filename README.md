@@ -1,3 +1,3 @@
 # Numerical_analysis
-Start with 1d heat diffusion equation
-![picture](/Figure1.png)
+Start with 1d heat diffusion equation  
+![Alt text](/Figure1.png)
