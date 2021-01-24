@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from numba import jit, prange
+from mpl_toolkits.mplot3d import Axes3D
 # Forward explicit, 1d heat diffusion, diffusivity = 1
 # Boundary condition: f(x=0, t) = 5, f(x=L) = 0
 # Initial condition: f(x, t=0) = 0
@@ -47,8 +48,10 @@ def eval_1d(u):
     return u
 
 eval_1d(u)
-
+# 2D plots
+'''
 x_list = np.linspace(0, 1, I+1)
+t_list = np.linspace(0, 1, N+1)
 plt.plot(x_list, u[0], color='red')
 plt.plot(x_list, u[1000], color='green')
 plt.plot(x_list, u[2500], color='green')
@@ -58,3 +61,26 @@ plt.title('1d heat diffusion')
 plt.xlabel('X range')
 plt.ylabel('Temperature')
 plt.show()
+'''
+# 3D plots
+
+t_list = np.linspace(0, expiration_time, u.shape[0])
+x_list = np.linspace(0, L, u.shape[1])
+x_list, t_list = np.meshgrid(x_list,t_list)
+print(f'size of t_list: {t_list.shape}, size of x_list: {x_list.shape}, size of u: {u.shape}')
+
+fig = plt.figure(figsize=(10,5))
+ax = plt.axes(projection='3d')
+
+ax.plot_wireframe(x_list, t_list, u, rcount=t_list.shape[1], ccount=1)
+ax.set_xlabel('x')
+ax.set_ylabel('t')
+ax.set_zlabel('T')
+ax.set_title('3D contour')
+plt.show()
+
+# 3D contour
+'''
+plt.contourf(x_list, t_list, u)
+plt.show()
+'''
