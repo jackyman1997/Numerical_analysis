@@ -19,7 +19,7 @@ dx = L / I
 expiration_time = 0.5
 dt = 0.5 * dx**2 # For stability reasons
 N = int(expiration_time / dt) # for n = 0, 1, ..., N -> N+1 time points
-print(f'domain step: {dx :.3f}; time step: {dt :.5f}; number of time subdivisions: {N}')
+print(f'domain step: {dx :.3f}; time step: {dt :.5f}; number of domain divisions: {I}; number of time subdivisions: {N}')
 
 # Set the Boundary conditions and the initiail value function
 # Initialize solution: the grid of u(n, i)
@@ -41,13 +41,13 @@ u[:, -1] = u_right
 
 @jit 
 def eval_1d(u):
-    for n in prange(0, N+1):
-        for i in prange(1, I+1):
+    for n in prange(0, N):
+        for i in prange(1, I):
             u[n+1,i] = u[n,i] + (dt/dx**2) * (u[n,i+1] - 2*u[n,i] + u[n,i-1])
     return u
 
 eval_1d(u)
-print(u[10000])
+
 x_list = np.linspace(0, 1, I+1)
 plt.plot(x_list, u[0], color='red')
 plt.plot(x_list, u[1000], color='green')
